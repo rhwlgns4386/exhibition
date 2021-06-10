@@ -11,8 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.awt.*;
 import java.io.*;
+import java.util.List;
 
 @RestController
 @RequestMapping
@@ -21,13 +21,18 @@ public class ExhibitionBoardController {
 
     private final ExhibitionBoardService exhibitionBoardService;
 
-    @GetMapping(path = "/upload")
-    public void upload(){}
+    @GetMapping("/boardAll")
+    public List<ExhibitionBoard> getBoardAll(){
+        return exhibitionBoardService.getAll();
+    }
 
+    @GetMapping("/selectBoard/{boardId}")
+    public ExhibitionBoard getBoardAll(@PathVariable("boardId")Integer id){
+        return exhibitionBoardService.getBoard(id).get();
+    }
 
-    @PostMapping("/post")
-    public void test(@RequestParam("img") MultipartFile img,@RequestParam("video") MultipartFile video,ExhibitionBoard exhibitionBoard
-            ,HttpServletRequest request) throws IOException
+    @PostMapping("/uploadBoard")
+    public void uploadBoard(@RequestParam("img") MultipartFile img,@RequestParam("video") MultipartFile video,ExhibitionBoard exhibitionBoard,HttpServletRequest request) throws IOException
     {
         exhibitionBoardService.saveBoard(img,video,exhibitionBoard,request);
     }

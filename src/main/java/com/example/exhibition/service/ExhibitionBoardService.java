@@ -1,7 +1,6 @@
 package com.example.exhibition.service;
 
 
-import com.example.exhibition.dto.ExhibitionBoardDto;
 import com.example.exhibition.model.ExhibitionBoard;
 import com.example.exhibition.model.Files;
 import com.example.exhibition.model.ImgFiles;
@@ -10,7 +9,6 @@ import com.example.exhibition.repository.ExhibitionBoardRepository;
 import com.example.exhibition.repository.ImgFileRepository;
 import com.example.exhibition.repository.VideoFileRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +19,8 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -72,5 +72,13 @@ public class ExhibitionBoardService {
         bufferedOutputStream.write(file.getBytes());
         bufferedOutputStream.close();
         return path;
+    }
+
+    public List<ExhibitionBoard> getAll() {
+        return exhibitionBoardRepository.findAll();
+    }
+
+    public Optional<ExhibitionBoard> getBoard(Integer id) {
+        return exhibitionBoardRepository.findById(id);
     }
 }
