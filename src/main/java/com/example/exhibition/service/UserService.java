@@ -21,8 +21,10 @@ public class UserService {
     @Transactional
     public void getUser(String id, String password, HttpSession session) {
         List<Optional<User>> user=userRepository.findByNameAndPassword(id,password);
+        System.out.println(user.get(0).isPresent());
         if(user.get(0).isPresent()){
             session.setAttribute("userId",user.get(0).get().getName());
+            session.setAttribute("password",user.get(0).get().getPassword());
         }
 
     }

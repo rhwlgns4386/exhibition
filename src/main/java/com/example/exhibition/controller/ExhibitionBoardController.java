@@ -1,16 +1,17 @@
 package com.example.exhibition.controller;
 
 
-import com.example.exhibition.dto.ExhibitionBoardDto;
+
 import com.example.exhibition.model.ExhibitionBoard;
 import com.example.exhibition.service.ExhibitionBoardService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import java.io.*;
 import java.util.List;
 
@@ -37,4 +38,20 @@ public class ExhibitionBoardController {
         exhibitionBoardService.saveBoard(img,video,exhibitionBoard,request);
     }
 
+    @DeleteMapping("/deleteBoard/{boardId}")
+    public void deleteBoard(@PathVariable("boardId")Integer id) {
+        exhibitionBoardService.deleteBoard(id);
+    }
+
+    @GetMapping("/clickGood/{boardId}")
+    public void clickGood(@PathVariable("boardId")Integer boardId,HttpServletRequest request){
+        HttpSession session=request.getSession();
+        boolean check=exhibitionBoardService.goodCheck(boardId,session);
+        if(!check){
+            exhibitionBoardService.saveGood( boardId,session);
+        }
+        else{
+            exhibitionBoardService.deleteGood(boardId,session);
+        }
+    }
 }
