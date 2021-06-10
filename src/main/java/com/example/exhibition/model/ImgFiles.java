@@ -1,0 +1,30 @@
+package com.example.exhibition.model;
+
+import com.sun.istack.NotNull;
+import lombok.Builder;
+import lombok.Data;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Data
+@Entity
+public class ImgFiles extends Files{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotNull
+    private String origFilename;
+
+    @NotNull
+    private String filename;
+
+    @NotNull
+    private String filePath;
+
+
+}
