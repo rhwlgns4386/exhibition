@@ -2,19 +2,20 @@ package com.example.exhibition.model;
 
 import com.sun.istack.NotNull;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 
-@Data
+@Getter
+@Setter
 @Entity
 public class VideoFiles extends Files{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "videoId")
     private Long id;
 
     @NotNull
@@ -24,5 +25,6 @@ public class VideoFiles extends Files{
     private String filename;
 
     @NotNull
+    @Lob
     private String filePath;
 }

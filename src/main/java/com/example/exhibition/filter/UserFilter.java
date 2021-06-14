@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 
-@WebFilter(urlPatterns = "/post")
+@WebFilter(urlPatterns = "/uploadBoard")
 public class UserFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -23,7 +23,7 @@ public class UserFilter implements Filter {
         HttpSession session=((HttpServletRequest) request).getSession();
         if(session.getAttribute("userId")==null){
             HttpServletResponse httpServletResponse=(HttpServletResponse) response;
-            ((HttpServletResponse) response).sendError(404);
+            ((HttpServletResponse) response).sendError(500);
         }
     }
 

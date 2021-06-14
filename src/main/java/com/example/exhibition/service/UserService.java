@@ -1,7 +1,6 @@
 package com.example.exhibition.service;
 
 
-import com.example.exhibition.dto.UserDto;
 import com.example.exhibition.model.User;
 import com.example.exhibition.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +18,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     @Transactional
-    public void getUser(String id, String password, HttpSession session) {
+    public User getUser(String id, String password, HttpSession session) {
         List<Optional<User>> user=userRepository.findByNameAndPassword(id,password);
         System.out.println(user.get(0).isPresent());
         if(user.get(0).isPresent()){
@@ -27,6 +26,7 @@ public class UserService {
             session.setAttribute("password",user.get(0).get().getPassword());
         }
 
+        return user.get(0).get();
     }
 
     @Transactional

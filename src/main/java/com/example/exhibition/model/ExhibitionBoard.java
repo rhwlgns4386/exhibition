@@ -10,6 +10,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -34,17 +35,23 @@ public class ExhibitionBoard {
     @Lob
     private String content;
 
-    @Column
-    private Long imgId;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @JoinColumn(name="imgId")
+    private ImgFiles imgId;
 
-    @Column
-    private Long videoId;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @JoinColumn(name="videoId")
+    private VideoFiles videoId;
 
-    @OneToMany(mappedBy = "boardId" ,fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    @JsonIgnoreProperties({"boardId"})
-    private List<BoardGood> boardGood;
+    @OneToMany(mappedBy = "board" ,fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @JsonIgnoreProperties({"board"})
+    private List<BoardGood> boardGood=new ArrayList<>();
 
     @Column
     private Integer goodCount;
 
+    public void setAuthor(User author) {
+        this.author = author;
+        author.getExhibitionBoards().add(this);
+    }
 }

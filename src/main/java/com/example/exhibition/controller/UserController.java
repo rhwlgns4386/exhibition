@@ -19,9 +19,9 @@ public class UserController {
     public  void user(){}
 
     @GetMapping("/login/{id}/{password}")
-    public void login(@PathVariable("id")String id, @PathVariable("password")String password, HttpServletRequest request){
+    public User login(@PathVariable("id")String id, @PathVariable("password")String password, HttpServletRequest request){
         HttpSession session = request.getSession();
-        userService.getUser(id,password,session);
+        return userService.getUser(id,password,session);
     }
 
     @PostMapping("/registration")

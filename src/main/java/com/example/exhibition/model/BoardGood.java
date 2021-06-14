@@ -18,12 +18,22 @@ public class BoardGood {
 
     @ManyToOne
     @JoinColumn(name = "userId")
-    private User userId;
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "exhibitionBoardId")
-    private ExhibitionBoard boardId;
+    private ExhibitionBoard board;
 
     @Column
     private Integer goodNum;
+
+    public void setBoard(ExhibitionBoard board) {
+        this.board = board;
+        board.getBoardGood().add(this);
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+        user.getBoardGood().add(this);
+    }
 }

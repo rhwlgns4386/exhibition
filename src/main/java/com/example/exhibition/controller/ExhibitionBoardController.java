@@ -28,7 +28,7 @@ public class ExhibitionBoardController {
     }
 
     @GetMapping("/selectBoard/{boardId}")
-    public ExhibitionBoard getBoardAll(@PathVariable("boardId")Integer id){
+    public @ResponseBody ExhibitionBoard getBoard(@PathVariable("boardId")Integer id){
         return exhibitionBoardService.getBoard(id).get();
     }
 
@@ -43,7 +43,7 @@ public class ExhibitionBoardController {
         exhibitionBoardService.deleteBoard(id);
     }
 
-    @GetMapping("/clickGood/{boardId}")
+    @PutMapping("/clickGood/{boardId}")
     public void clickGood(@PathVariable("boardId")Integer boardId,HttpServletRequest request){
         HttpSession session=request.getSession();
         boolean check=exhibitionBoardService.goodCheck(boardId,session);
