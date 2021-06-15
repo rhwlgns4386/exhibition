@@ -1,43 +1,19 @@
 package com.example.exhibition.controller;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.exhibition.model.User;
-import com.example.exhibition.service.UserService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-@RestController
-@RequiredArgsConstructor
+@Controller
+@RequestMapping
 public class UserController {
 
-    private final UserService userService;
-
-    @GetMapping("/user")
-    public  void user(){}
-
-    @GetMapping("/login/{id}/{password}")
-    public User login(@PathVariable("id")String id, @PathVariable("password")String password, HttpServletRequest request){
-        HttpSession session = request.getSession();
-        return userService.getUser(id,password,session);
+    @GetMapping("/")
+    public String mainboard(){
+        return "user";
     }
-
-    @PostMapping("/registration")
-    public void registration(@RequestBody User user){
-        userService.insertUser(user);
+    @GetMapping("/login")
+    public String loginpage(){
+        return "login";
     }
-
-    @PutMapping("/userUpdate")
-    public void update(@RequestBody User user){
-        userService.updateUser(user);
-    }
-
-    @DeleteMapping("userDelete/{id}")
-    public void delete(@PathVariable("id")Integer id){
-        userService.deleteUser(id);
-    }
-
-
 }

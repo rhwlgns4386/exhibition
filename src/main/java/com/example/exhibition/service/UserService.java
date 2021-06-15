@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
@@ -18,14 +19,13 @@ public class UserService {
     private final UserRepository userRepository;
 
     @Transactional
-    public User getUser(String id, String password, HttpSession session) {
-        List<Optional<User>> user=userRepository.findByNameAndPassword(id,password);
-        System.out.println(user.get(0).isPresent());
+    public User getUser(User users, HttpServletRequest request) {
+        List<Optional<User>> user=userRepository.findByNameAndPassword(users.getName(),users.getPassword());
         if(user.get(0).isPresent()){
+            HttpSession session = request.getSession();
             session.setAttribute("userId",user.get(0).get().getName());
             session.setAttribute("password",user.get(0).get().getPassword());
         }
-
         return user.get(0).get();
     }
 
@@ -48,4 +48,5 @@ public class UserService {
         Optional<User> user = userRepository.findById(id);
         userRepository.delete(user.get());
     }
+
 }
