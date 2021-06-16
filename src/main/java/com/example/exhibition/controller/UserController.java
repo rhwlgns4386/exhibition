@@ -12,8 +12,17 @@ public class UserController {
     public String mainboard(){
         return "user";
     }
+
     @GetMapping("/login")
     public String loginpage(){
         return "login";
     }
+
+    @GetMapping("/registration")
+    public  String registration(){
+        return "registration";
+    }
+
+
+
 }

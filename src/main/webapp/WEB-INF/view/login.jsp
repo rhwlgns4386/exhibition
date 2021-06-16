@@ -1,81 +1,25 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-         pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
 <head>
-    <%
-        // ÀÎÄÚµù Ã³¸®
-        request.setCharacterEncoding("euc-kr");
-    %>
-    <title>·Î±×ÀÎ È­¸é</title>
-
-    <!-- css ÆÄÀÏ ºĞ¸® -->
-    <link href='../../css/join_style.css' rel='stylesheet' style='text/css'/>
-
-    <script type="text/javascript">
-
-        function checkValue()
-        {
-            inputForm = eval("document.loginInfo");
-            if(!inputForm.id.value)
-            {
-                alert("¾ÆÀÌµğ¸¦ ÀÔ·ÂÇÏ¼¼¿ä");
-                inputForm.id.focus();
-                return false;
-            }
-            if(!inputForm.password.value)
-            {
-                alert("ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä");
-                inputForm.password.focus();
-                return false;
-            }
-        }
-
-        // È¸¿ø°¡ÀÔ ¹öÆ° Å¬¸¯½Ã È¸¿ø°¡ÀÔ È­¸éÀ¸·Î ÀÌµ¿
-        function goJoinForm() {
-            location.href="JoinForm.jsp";
-        }
-    </script>
-
+    <meta charset="UTF-8">
+    <title>ë¡œê·¸ì¸ ì˜ˆì œ</title>
 </head>
 <body>
-<div id="wrap">
-    <form name="loginInfo" method="post" action="../pro/LoginPro.jsp"
-          onsubmit="return checkValue()">
-
-        <!-- ÀÌ¹ÌÁö Ãß°¡ -->
-
-
-        <table>
-            <tr>
-                <td bgcolor="skyblue">¾ÆÀÌµğ</td>
-                <td><input type="text" name="id" maxlength="50"></td>
-            </tr>
-            <tr>
-                <td bgcolor="skyblue">ºñ¹Ğ¹øÈ£</td>
-                <td><input type="password" name="password" maxlength="50"></td>
-            </tr>
-        </table>
-        <br>
-        <input type="submit" value="·Î±×ÀÎ"/>
-        <input type="button" value="È¸¿ø°¡ÀÔ" onclick="goJoinForm()" />
-    </form>
-
-    <%
-        // ¾ÆÀÌµğ, ºñ¹Ğ¹øÈ£°¡ Æ²¸±°æ¿ì È­¸é¿¡ ¸Ş½ÃÁö Ç¥½Ã
-        // LoginPro.jsp¿¡¼­ ·Î±×ÀÎ Ã³¸® °á°ú¿¡ µû¸¥ ¸Ş½ÃÁö¸¦ º¸³½´Ù.
-        String msg=request.getParameter("msg");
-
-        if(msg!=null && msg.equals("0"))
-        {
-            out.println("<br>");
-            out.println("<font color='red' size='5'>ºñ¹Ğ¹øÈ£¸¦ È®ÀÎÇØ ÁÖ¼¼¿ä.</font>");
-        }
-        else if(msg!=null && msg.equals("-1"))
-        {
-            out.println("<br>");
-            out.println("<font color='red' size='5'>¾ÆÀÌµğ¸¦ È®ÀÎÇØ ÁÖ¼¼¿ä.</font>");
-        }
-    %>
-</div>
+<% if(session.getAttribute("userId")==null){ //ì„¸ì…˜ì´ ì„¤ì •ë˜ì§€ ì•Šì„ ê²½ìš° %>
+<form method="post" action="/login">
+    <label for="id">ì•„ì´ë””</label>
+    <input  type="text" name="name" id="id" placeholder="ë¹„ë°€ë²ˆí˜¸" required />
+    <label for="pass">ë¹„ë°€ë²ˆí˜¸</label>
+    <input type="password" name="password" id="pass" placeholder="ë¹„ë°€ë²ˆí˜¸" required />
+    <input type="submit" value="ë¡œê·¸ì¸" />
+</form>
+<% }else{ %>
+<form method="get" action="logout.jsp">
+    <%=session.getAttribute("userId") %>ë‹˜ í™˜ì˜í•©ë‹ˆë‹¤~
+    <input type="submit" value="ë¡œê·¸ì•„ì›ƒ" />
+</form>
+<% } %>
 </body>
 </html>

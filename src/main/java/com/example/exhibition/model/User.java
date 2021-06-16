@@ -2,6 +2,7 @@ package com.example.exhibition.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sun.istack.NotNull;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,8 +21,10 @@ public class User {
     @Column(name = "userId")
     private Integer id;
 
+    @NotNull
     private String name;
-
+    
+    @NotNull
     private String password;
 
 

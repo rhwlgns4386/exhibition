@@ -5,15 +5,25 @@
 <html lang="ko">
 <body>
 
-<div class="container">
-    <table class="table table-hover table table-striped">
-        <tr>
-            <th>번호</th>
-            <th>작성자</th>
-            <th>제목</th>
-        </tr>
-    </table>
-</div>
+<div class="collapse navbar-collapse" id="navbar-collapse2">
+    <ul class="nav navbar-nav navbar-right">
+        <li class="active"><a href="../index.html">Posts</a></li>
+        <% if(session.getAttribute("userId")==null){ //세션이 설정되지 않을 경우 %>
+        <li><a href="/login" role="button">로그인</a></li>
+        <li><a href="/registration" role="button">회원가입</a></li>
+        <% }else{ %>
+        <li><a href="/users/{{id}}/form" role="button">개인정보수정</a></li>
+        <li><a href="/uploadBoard" role="button"><b>글적기</b></a></li>
+        <li><a href="/logout" role="button">로그아웃</a></li>
+        <% } %>
 
+
+
+        <li><a href="/reservations" role="button"><b>Reservation List</b></a></li>
+
+
+
+    </ul>
+</div>
 </body>
 </html>

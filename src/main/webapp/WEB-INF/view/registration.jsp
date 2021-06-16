@@ -46,7 +46,9 @@
 
     <!-- 입력한 값을 전송하기 위해 form 태그를 사용한다 -->
     <!-- 값(파라미터) 전송은 POST 방식, 전송할 페이지는 JoinPro.jsp -->
-    <form method="post" action="/registration">
+    <form method="post" action="/registration"
+          onsubmit="return checkValue()">
+
         <table>
             <tr>
                 <td id="title">아이디</td>

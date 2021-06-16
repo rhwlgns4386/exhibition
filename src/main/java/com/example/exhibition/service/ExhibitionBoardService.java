@@ -35,8 +35,8 @@ public class ExhibitionBoardService {
     @Transactional
     public void saveBoard(MultipartFile img, MultipartFile video, ExhibitionBoard exhibitionBoard, HttpServletRequest request) throws IOException {
         HttpSession session=request.getSession();
-        User user=userRepository.findByNameAndPassword(session.getAttribute("userId").toString(),session.getAttribute("password").toString()).get(0).get();
-        exhibitionBoard.setAuthor(user);
+        Optional<User> user=userRepository.findByNameAndPassword(session.getAttribute("userId").toString(),session.getAttribute("password").toString());
+        exhibitionBoard.setAuthor(user.get());
         exhibitionBoard.setGoodCount(0);
         exhibitionBoard.setImgId(getImgFileId(img,request));
         exhibitionBoard.setVideoId(getVideoFileId(video,request));
@@ -62,14 +62,14 @@ public class ExhibitionBoardService {
 
     @Transactional
     public boolean goodCheck(Integer boardId, HttpSession session) {
-        User user=userRepository.findByNameAndPassword(session.getAttribute("userId").toString(),session.getAttribute("password").toString()).get(0).get();
+        User user=userRepository.findByNameAndPassword(session.getAttribute("userId").toString(),session.getAttribute("password").toString()).get();
         Optional<BoardGood> check = boardGoodRepository.findByUserIdAndBoardId(user, exhibitionBoardRepository.findById(boardId).get());
        return check.isPresent();
     }
     @Transactional
     public void saveGood(Integer boardId, HttpSession session) {
         BoardGood boardGood=new BoardGood();
-        User user=userRepository.findByNameAndPassword(session.getAttribute("userId").toString(),session.getAttribute("password").toString()).get(0).get();
+        User user=userRepository.findByNameAndPassword(session.getAttribute("userId").toString(),session.getAttribute("password").toString()).get();
         Optional<ExhibitionBoard> exhibitionBoard=exhibitionBoardRepository.findById(boardId);
         boardGood.setUser(user);
         boardGood.setBoard(exhibitionBoard.get());
@@ -80,7 +80,7 @@ public class ExhibitionBoardService {
     @Transactional
     public void deleteGood(Integer boardId, HttpSession session) {
         User user=userRepository.findByNameAndPassword(session.getAttribute("userId").toString(),
-                session.getAttribute("password").toString()).get(0).get();
+                session.getAttribute("password").toString()).get();
         boardGoodRepository.delete(boardGoodRepository.findByUserIdAndBoardId(user,exhibitionBoardRepository.findById(boardId).get()).get());
     }
 

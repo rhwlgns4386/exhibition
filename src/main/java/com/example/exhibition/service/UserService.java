@@ -1,6 +1,7 @@
 package com.example.exhibition.service;
 
 
+import com.example.exhibition.dto.UserDto;
 import com.example.exhibition.model.User;
 import com.example.exhibition.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,19 +20,29 @@ public class UserService {
     private final UserRepository userRepository;
 
     @Transactional
-    public User getUser(User users, HttpServletRequest request) {
-        List<Optional<User>> user=userRepository.findByNameAndPassword(users.getName(),users.getPassword());
-        if(user.get(0).isPresent()){
-            HttpSession session = request.getSession();
-            session.setAttribute("userId",user.get(0).get().getName());
-            session.setAttribute("password",user.get(0).get().getPassword());
+    public String getUser(User users, HttpServletRequest request) {
+        System.out.println(users.getName());
+        Optional<User> user=userRepository.findByName(users.getName());
+        if(!user.isPresent()){
+            return "redirect:/users/loginForm";
         }
-        return user.get(0).get();
+        if(!user.get().getPassword().equals(users.getPassword())){
+            System.out.println("Login fail");
+            return "redirect:/users/loginForm";
+        }
+        HttpSession session = request.getSession();
+        session.setAttribute("userId",user.get().getName());
+        session.setAttribute("password",user.get().getPassword());
+        return "redirect:/";
     }
 
     @Transactional
-    public void insertUser(User user) {
-        userRepository.save(user);
+    public String insertUser(User user) {
+        if(!userRepository.findByName(user.getName()).isPresent()){
+            userRepository.save(user);
+            return "redirect:/";
+        }
+        return "registration";
     }
 
     @Transactional
