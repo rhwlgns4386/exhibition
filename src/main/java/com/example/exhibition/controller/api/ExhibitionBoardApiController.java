@@ -22,13 +22,10 @@ public class ExhibitionBoardApiController {
 
     private final ExhibitionBoardService exhibitionBoardService;
 
-    @GetMapping("/boardAll")
-    public List<ExhibitionBoard> getBoardAll(){
-        return exhibitionBoardService.getAll();
-    }
-
-
-
+//    @GetMapping("/boardAll")
+//    public List<ExhibitionBoard> getBoardAll(){
+//        return exhibitionBoardService.getAll();
+//    }
 
 
     @DeleteMapping("/deleteBoard/{boardId}")

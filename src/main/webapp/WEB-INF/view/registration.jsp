@@ -100,11 +100,13 @@
             },                       //6             //7
         });
     });
+
     $('#set').click(function (){
         if(document.getElementById("set").className=="ok"){
             var user={
                 "name":document.userInfo.name.value,
-                "password":document.userInfo.password.value
+                "password":document.userInfo.password.value,
+                "admin":"NoN"
             }
             $.ajax({
                 type : "POST",                               //1

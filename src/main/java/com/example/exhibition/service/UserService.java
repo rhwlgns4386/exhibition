@@ -33,6 +33,9 @@ public class UserService {
         HttpSession session = request.getSession();
         session.setAttribute("userId",user.get().getName());
         session.setAttribute("password",user.get().getPassword());
+        if(user.get().getAdmin().equals("yes")){
+            session.setAttribute("admin",user.get().getAdmin());
+        }
         return "ok";
     }
 

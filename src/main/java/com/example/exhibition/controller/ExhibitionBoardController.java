@@ -29,8 +29,7 @@ public class ExhibitionBoardController {
 
         ModelAndView modelAndView=new ModelAndView();
         modelAndView.setViewName("exhibitionBoardList");
-        modelAndView.addObject("boardList",exhibitionBoardService.getAll());
-        modelAndView.addObject("url","/images/img/"+exhibitionBoardService.getAll().get(0).getImgId().getOrigFilename());
+        modelAndView.addObject("boardList",exhibitionBoardService.getAll("yes"));
         return modelAndView;
     }
 

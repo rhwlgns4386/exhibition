@@ -36,6 +36,9 @@ public class ExhibitionBoard {
     @Lob
     private String content;
 
+    @NotNull
+    private String apply;
+
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinColumn(name="imgId")
     private ImgFiles imgId;
@@ -43,6 +46,7 @@ public class ExhibitionBoard {
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinColumn(name="videoId")
     private VideoFiles videoId;
+
 
     @OneToMany(mappedBy = "board" ,fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JsonIgnoreProperties({"board"})

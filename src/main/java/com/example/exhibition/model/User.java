@@ -29,6 +29,9 @@ public class User {
     @NotNull
     private String password;
 
+    @NotNull
+    private String admin;
+
 
     @OneToMany(mappedBy = "user" ,fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JsonIgnore

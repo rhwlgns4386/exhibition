@@ -42,6 +42,7 @@ public class ExhibitionBoardService {
         Optional<User> user=userRepository.findByNameAndPassword(session.getAttribute("userId").toString(),session.getAttribute("password").toString());
         System.out.println(user.get());
         exhibitionBoard.setAuthor(user.get());
+        exhibitionBoard.setApply("NoN");
         exhibitionBoard.setGoodCount(0);
         exhibitionBoard.setImgId(getImgFileId(img,request));
         exhibitionBoard.setVideoId(getVideoFileId(video,request));
@@ -49,8 +50,8 @@ public class ExhibitionBoardService {
     }
 
     @Transactional
-    public List<ExhibitionBoard> getAll() {
-        return exhibitionBoardRepository.findAll();
+    public List<ExhibitionBoard> getAll(String apply) {
+        return exhibitionBoardRepository.findByApply(apply);
     }
 
     @Transactional
@@ -87,6 +88,14 @@ public class ExhibitionBoardService {
         User user=userRepository.findByNameAndPassword(session.getAttribute("userId").toString(),
                 session.getAttribute("password").toString()).get();
         boardGoodRepository.delete(boardGoodRepository.findByUserIdAndBoardId(user,exhibitionBoardRepository.findById(boardId).get()).get());
+    }
+
+    @Transactional
+    public String setApply(Integer id) {
+        System.out.println(id);
+        Optional<ExhibitionBoard> exhibitionBoard=exhibitionBoardRepository.findById(id);
+        exhibitionBoard.get().setApply("yes");
+        return "ok";
     }
 
     private VideoFiles getVideoFileId(MultipartFile video, HttpServletRequest request) throws IOException {
@@ -133,5 +142,4 @@ public class ExhibitionBoardService {
         String list[]={path,fileName};
         return list;
     }
-
 }
