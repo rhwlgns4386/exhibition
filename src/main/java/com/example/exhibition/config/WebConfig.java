@@ -16,7 +16,9 @@ public class WebConfig  implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/images/**")
-                .addResourceLocations("/static");
+                .addResourceLocations("/static/img");
+        registry.addResourceHandler("/videos/**")
+                .addResourceLocations("/static/video");
     }
 
     @Override
@@ -26,9 +28,9 @@ public class WebConfig  implements WebMvcConfigurer {
         registry.jsp().prefix("/WEB-INF/view/").suffix(".jsp");
     }
 
-    @Override
-    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        converters.add(new MappingJackson2HttpMessageConverter());
-    }
+//    @Override
+//    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+//        converters.add(new MappingJackson2HttpMessageConverter());
+//    }
 
 }

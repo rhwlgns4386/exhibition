@@ -27,16 +27,9 @@ public class ExhibitionBoardApiController {
         return exhibitionBoardService.getAll();
     }
 
-    @GetMapping("/selectBoard/{boardId}")
-    public @ResponseBody ExhibitionBoard getBoard(@PathVariable("boardId")Integer id){
-        return exhibitionBoardService.getBoard(id).get();
-    }
 
-    @PostMapping("/uploadBoard")
-    public void uploadBoard(@RequestParam("img") MultipartFile img,@RequestParam("video") MultipartFile video,ExhibitionBoard exhibitionBoard,HttpServletRequest request) throws IOException
-    {
-        exhibitionBoardService.saveBoard(img,video,exhibitionBoard,request);
-    }
+
+
 
     @DeleteMapping("/deleteBoard/{boardId}")
     public void deleteBoard(@PathVariable("boardId")Integer id) {

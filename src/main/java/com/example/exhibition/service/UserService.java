@@ -24,40 +24,41 @@ public class UserService {
         System.out.println(users.getName());
         Optional<User> user=userRepository.findByName(users.getName());
         if(!user.isPresent()){
-            return "redirect:/users/loginForm";
+            return "idErr";
         }
         if(!user.get().getPassword().equals(users.getPassword())){
             System.out.println("Login fail");
-            return "redirect:/users/loginForm";
+            return "pwErr";
         }
         HttpSession session = request.getSession();
         session.setAttribute("userId",user.get().getName());
         session.setAttribute("password",user.get().getPassword());
-        return "redirect:/";
+        return "ok";
     }
 
     @Transactional
     public String insertUser(User user) {
+        System.out.println(user.getName());
         if(!userRepository.findByName(user.getName()).isPresent()){
             userRepository.save(user);
-            return "redirect:/";
+            return "ok";
         }
-        return "registration";
+        return "no";
     }
 
     @Transactional
-    public void updateUser(User user) {
-        Optional<User>updateUser=userRepository.findById(user.getId());
-        if(updateUser.isPresent()){
-            User users=updateUser.get();
-            users.setPassword(user.getPassword());
-        }
+    public String updateUser(User user) {
+        userRepository.findByName(user.getName()).get().setPassword(user.getPassword());
+        return "ok";
     }
 
     @Transactional
-    public void deleteUser(Integer id) {
-        Optional<User> user = userRepository.findById(id);
+    public String deleteUser(String id,HttpServletRequest request) {
+        HttpSession session=request.getSession();
+        Optional<User> user = userRepository.findByName(id);
         userRepository.delete(user.get());
+        session.invalidate();
+        return "ok";
     }
 
 }

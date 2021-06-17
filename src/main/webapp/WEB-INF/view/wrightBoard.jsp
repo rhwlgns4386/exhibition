@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>게시판 - 글쓰기</title>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -42,7 +43,7 @@
         <div class="row">
             <div class="col-auto mr-auto"></div>
             <div class="col-auto">
-                <input class="btn btn-primary" type="submit" role="button" value="글쓰기">
+                <input class="btn btn-primary" type="submit" role="button" value="글쓰기" id="btn">
             </div>
         </div>
     </form>

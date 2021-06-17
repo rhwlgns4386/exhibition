@@ -1,7 +1,9 @@
 package com.example.exhibition.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 import lombok.Data;
 import lombok.Getter;
@@ -23,17 +25,17 @@ public class User {
 
     @NotNull
     private String name;
-    
+
     @NotNull
     private String password;
 
 
     @OneToMany(mappedBy = "user" ,fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    @JsonBackReference
+    @JsonIgnore
     private List<BoardGood> boardGood=new ArrayList<>();
 
     @OneToMany(mappedBy = "author" ,fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    @JsonBackReference
+    @JsonIgnore
     private List<ExhibitionBoard> exhibitionBoards=new ArrayList<>();
 
 
