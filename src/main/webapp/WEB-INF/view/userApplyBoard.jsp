@@ -10,7 +10,7 @@
 <body>
 <form >
     <table border="1" summary="게시판 수정폼">
-        <caption><b>게시판 수정폼</b></caption>
+        <caption><b>게시판</b></caption>
         <colgroup>
             <col width=100/>
             <col width=500/>
