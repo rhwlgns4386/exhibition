@@ -33,7 +33,7 @@ public class User {
     private String admin;
 
 
-    @OneToMany(mappedBy = "user" ,fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "user" ,fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JsonIgnore
     private List<BoardGood> boardGood=new ArrayList<>();
 

@@ -33,15 +33,9 @@ public class ExhibitionBoardApiController {
         exhibitionBoardService.deleteBoard(id);
     }
 
-    @PutMapping("/clickGood/{boardId}")
-    public void clickGood(@PathVariable("boardId")Integer boardId,HttpServletRequest request){
+    @PutMapping("/clickGood")
+    public Integer clickGood(@RequestBody Integer id,HttpServletRequest request){
         HttpSession session=request.getSession();
-        boolean check=exhibitionBoardService.goodCheck(boardId,session);
-        if(!check){
-            exhibitionBoardService.saveGood( boardId,session);
-        }
-        else{
-            exhibitionBoardService.deleteGood(boardId,session);
-        }
+        return exhibitionBoardService.goodCheck(id,session);
     }
 }

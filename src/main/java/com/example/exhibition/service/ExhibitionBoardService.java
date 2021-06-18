@@ -3,7 +3,6 @@ package com.example.exhibition.service;
 
 import com.example.exhibition.model.*;
 import com.example.exhibition.repository.*;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -67,27 +66,31 @@ public class ExhibitionBoardService {
     }
 
     @Transactional
-    public boolean goodCheck(Integer boardId, HttpSession session) {
-        User user=userRepository.findByNameAndPassword(session.getAttribute("userId").toString(),session.getAttribute("password").toString()).get();
-        Optional<BoardGood> check = boardGoodRepository.findByUserIdAndBoardId(user, exhibitionBoardRepository.findById(boardId).get());
-        return check.isPresent();
-    }
-    @Transactional
-    public void saveGood(Integer boardId, HttpSession session) {
-        BoardGood boardGood=new BoardGood();
-        User user=userRepository.findByNameAndPassword(session.getAttribute("userId").toString(),session.getAttribute("password").toString()).get();
+    public Integer goodCheck(Integer boardId, HttpSession session) {
+        Optional<ExhibitionBoard> board=exhibitionBoardRepository.findById(boardId);
         Optional<ExhibitionBoard> exhibitionBoard=exhibitionBoardRepository.findById(boardId);
+        Optional<User> user=userRepository.findByNameAndPassword(session.getAttribute("userId").toString(),session.getAttribute("password").toString());
+        Optional<BoardGood> boardGood=boardGoodRepository.findByUserAndBoard(user.get(),exhibitionBoard.get());
+        if(boardGood.isPresent()){
+            boardGoodRepository.delete(boardGood.get());
+            List<BoardGood> boardGoods=boardGoodRepository.findByBoardId(boardId);
+            exhibitionBoard.get().setGoodCount(boardGoods.size());
+            return boardGoods.size();
+        }
+        else{
+            return saveGood(boardId,user.get(),exhibitionBoard.get());
+        }
+
+    }
+    public Integer saveGood(Integer boardId, User user,ExhibitionBoard exhibitionBoard) {
+        BoardGood boardGood=new BoardGood();
         boardGood.setUser(user);
-        boardGood.setBoard(exhibitionBoard.get());
+        boardGood.setBoard(exhibitionBoard);
         boardGood.setGoodNum(1);
         boardGoodRepository.save(boardGood);
-        //exhibitionBoard.get().setGoodCount(boardGoodRepository.findByBoardId(boardId).size());
-    }
-    @Transactional
-    public void deleteGood(Integer boardId, HttpSession session) {
-        User user=userRepository.findByNameAndPassword(session.getAttribute("userId").toString(),
-                session.getAttribute("password").toString()).get();
-        boardGoodRepository.delete(boardGoodRepository.findByUserIdAndBoardId(user,exhibitionBoardRepository.findById(boardId).get()).get());
+        List<BoardGood> boardGoods=boardGoodRepository.findByBoardId(boardId);
+        exhibitionBoard.setGoodCount(boardGoods.size());
+        return boardGoods.size();
     }
 
     @Transactional

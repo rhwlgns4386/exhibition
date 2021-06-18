@@ -13,7 +13,9 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface BoardGoodRepository  extends JpaRepository<BoardGood,Integer> {
 
-    Optional<BoardGood> findByUserIdAndBoardId(User userId, ExhibitionBoard exhibitionBoardId);
+    Optional<BoardGood> findByUserAndBoard(User user,ExhibitionBoard board);
 
     List<BoardGood> findByBoardId(Integer boardId);
+
+    List<BoardGood> findByUser(User user);
 }

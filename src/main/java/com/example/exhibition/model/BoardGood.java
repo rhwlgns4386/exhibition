@@ -29,11 +29,11 @@ public class BoardGood {
 
     public void setBoard(ExhibitionBoard board) {
         this.board = board;
-        board.getBoardGood().add(this);
+        this.board.getBoardGood().add(this);
     }
 
     public void setUser(User user) {
         this.user = user;
-        user.getBoardGood().add(this);
+        this.user.getBoardGood().add(this);
     }
 }

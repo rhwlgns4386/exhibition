@@ -40,14 +40,28 @@
             </td>
         </tr>
         </tbody>
+
     </table>
+    <input type="button" value="좋아요:${board.goodCount}" id="good" class="no" />
     <p>
         <a href="/" type="button">취소</a>
-
     </p>
 </form>
 <script>
 
+    $("#good").click(function (){
+        var id=${board.id};
+        $.ajax({
+            type : "PUT",                               //1
+            url : "/clickGood",                          //2
+            dataType : 'type',                           //3
+            contentType : 'application/json',
+            data :JSON.stringify(id),                 //5
+            complete  : function (resp){
+                document.getElementById("good").value="좋아요:"+resp.responseText.replace("<Integer>","").replace("</Integer>","");
+            },
+        });
+    })
 
     $("#playBtn").on("click", function() {
 
