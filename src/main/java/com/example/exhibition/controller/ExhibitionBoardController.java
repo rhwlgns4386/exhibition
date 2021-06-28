@@ -19,7 +19,7 @@ public class ExhibitionBoardController {
     private final ExhibitionBoardService exhibitionBoardService;
 
 
-    @GetMapping("/uploadBoard")
+    @GetMapping("/user/uploadBoard")
     public String uploadBoard(){
         return "wrightBoard";
     }

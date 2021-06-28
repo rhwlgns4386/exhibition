@@ -20,7 +20,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     @Transactional
-    public String getUser(User users, HttpServletRequest request) {
+    public String getUser(User users, HttpSession session) {
         System.out.println(users.getName());
         Optional<User> user=userRepository.findByName(users.getName());
         if(!user.isPresent()){
@@ -30,7 +30,7 @@ public class UserService {
             System.out.println("Login fail");
             return "pwErr";
         }
-        HttpSession session = request.getSession();
+
         session.setAttribute("userId",user.get().getName());
         session.setAttribute("password",user.get().getPassword());
         if(user.get().getAdmin().equals("yes")){

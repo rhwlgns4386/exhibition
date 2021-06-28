@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
+<%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE>
 <html>
 <head>
@@ -43,12 +44,19 @@
 
     </table>
     <input type="button" value="좋아요:${board.goodCount}" id="good" class="no" />
+</form>
     <p>
+        <c:set var="userId" value="${board.author.name}"/>
+        <%if(session.getAttribute("userId").equals((String)pageContext.getAttribute("userId")) || session.getAttribute("admin").equals("yes")){%>
+    <form method="get" action="/" id="home">
+        <input type="button" value="수정" id="update" class="no" />
+        <input type="button" value="삭제" id="delete" class="no" />
+    </form>
+        <%}%>
         <a href="/" type="button">취소</a>
     </p>
-</form>
-<script>
 
+<script>
     $("#good").click(function (){
         var id=${board.id};
         $.ajax({
@@ -59,6 +67,25 @@
             data :JSON.stringify(id),                 //5
             complete  : function (resp){
                 document.getElementById("good").value="좋아요:"+resp.responseText.replace("<Integer>","").replace("</Integer>","");
+            },
+        });
+    })
+
+    $("#playBtn").on("click", function() {
+
+        $("#myVideo").trigger("play");
+
+    });
+
+    $("#delete").click(function (){
+        $.ajax({
+            type : "DELETE",                               //1
+            url : "/deleteBoard/${board.id}",                          //2
+            dataType : 'type',                           //3
+            contentType : 'application/json',
+            data :"",                 //5
+            complete  : function (resp){
+                document.getElementById("home").submit();
             },
         });
     })

@@ -11,8 +11,8 @@ import java.io.IOException;
 import java.util.Optional;
 
 @Slf4j
-@WebFilter(urlPatterns = "/user/*")
-public class UserFilter implements Filter {
+@WebFilter(urlPatterns = "/admin/*")
+public class AdminFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         System.out.println("-------------------------------------------------------------------");
@@ -23,11 +23,12 @@ public class UserFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest=(HttpServletRequest) request;
         HttpSession session=((HttpServletRequest) request).getSession();
-        if(session.getAttribute("userId")==null){
+
+        if(session.getAttribute("admin")==null){
             HttpServletResponse httpServletResponse=(HttpServletResponse) response;
-            ((HttpServletResponse) response).sendRedirect("/");
+            ((HttpServletResponse) response).sendError(588,"일반 사용자 입니다.");
         }
-        chain.doFilter(request,response);
+        chain.doFilter(request, response);
     }
 
     @Override

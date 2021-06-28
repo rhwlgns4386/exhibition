@@ -18,7 +18,7 @@ public class AdminController {
 
     private final ExhibitionBoardService exhibitionBoardService;
 
-    @GetMapping("/userApplyList")
+    @GetMapping("/admin/userApplyList")
     public ModelAndView exhibitionBoardList(){
 
         ModelAndView modelAndView=new ModelAndView();
@@ -27,7 +27,7 @@ public class AdminController {
         return modelAndView;
     }
 
-    @GetMapping("/selectApply/{boardId}")
+    @GetMapping("/admin/selectApply/{boardId}")
     public  ModelAndView getBoard(@PathVariable("boardId")Integer id){
         ExhibitionBoard exhibitionBoard=exhibitionBoardService.getBoard(id).get();
         ModelAndView modelAndView=new ModelAndView();

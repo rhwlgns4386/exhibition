@@ -24,7 +24,9 @@ public class UserApiController {
 
     @PostMapping(value = "/login")
     public String login(@RequestBody User user, HttpServletRequest request){
-        return userService.getUser(user,request);
+        HttpSession session = request.getSession();
+        session.setMaxInactiveInterval(1800);
+        return userService.getUser(user,session);
     }
 
     @GetMapping("/findUser/{userName}")

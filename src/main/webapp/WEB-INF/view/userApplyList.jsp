@@ -27,7 +27,7 @@
         <tr>
             <td>
                 <c:forEach items="${boardList}" var="node">
-                    <a href="/selectApply/${node.id}"><div class="ellipsis">${node.title}</div></a>
+                    <a href="/admin/selectApply/${node.id}"><div class="ellipsis">${node.title}</div></a>
                 </c:forEach>
             </td>
             <td class="date">
